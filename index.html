@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathUp - Coming Soon</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background: #ffffff;
+            color: #1a1a2e;
+        }
+
+        #root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Animated Background Shapes Component
+        const BackgroundShapes = () => {
+            return (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    overflow: 'hidden',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                }}>
+                    <div style={{
+                        position: 'absolute',
+                        top: '-10%',
+                        right: '-5%',
+                        width: '400px',
+                        height: '400px',
+                        background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)',
+                        borderRadius: '50%',
+                        opacity: 0.6,
+                        animation: 'float 8s ease-in-out infinite'
+                    }} />
+                    <div style={{
+                        position: 'absolute',
+                        bottom: '-15%',
+                        left: '-10%',
+                        width: '500px',
+                        height: '500px',
+                        background: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)',
+                        borderRadius: '50%',
+                        opacity: 0.5,
+                        animation: 'float 10s ease-in-out infinite reverse'
+                    }} />
+                    <div style={{
+                        position: 'absolute',
+                        top: '40%',
+                        left: '60%',
+                        width: '200px',
+                        height: '200px',
+                        background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
+                        borderRadius: '50%',
+                        opacity: 0.4,
+                        animation: 'float 6s ease-in-out infinite'
+                    }} />
+                    <style>{`
+                        @keyframes float {
+                            0%, 100% { transform: translateY(0) rotate(0deg); }
+                            50% { transform: translateY(-30px) rotate(5deg); }
+                        }
+                    `}</style>
+                </div>
+            );
+        };
+
+        // Logo Component
+        const Logo = () => (
+            <div style={{
+                fontSize: '2.5rem',
+                fontWeight: 800,
+                letterSpacing: '-1px',
+                marginBottom: '8px'
+            }}>
+                <span style={{ color: '#1a1a2e' }}>Path</span>
+                <span style={{ 
+                    color: '#2563eb',
+                    background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent'
+                }}>Up</span>
+            </div>
+        );
+
+        // Badge Component
+        const StatusBadge = () => (
+            <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
+                color: '#b45309',
+                padding: '14px 28px',
+                borderRadius: '12px',
+                fontSize: '0.9rem',
+                fontWeight: 700,
+                marginBottom: '35px',
+                border: '2px solid #f59e0b',
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                boxShadow: '0 4px 15px rgba(245, 158, 11, 0.2)'
+            }}>
+                <span style={{ fontSize: '1.2rem' }}>🚧</span>
+                Under Construction
+            </div>
+        );
+
+        // Email Form Component
+        const EmailForm = () => {
+            const [email, setEmail] = useState('');
+            const [isSubmitted, setIsSubmitted] = useState(false);
+            const [isFocused, setIsFocused] = useState(false);
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                setIsSubmitted(true);
+                setEmail('');
+            };
+
+            if (isSubmitted) {
+                return (
+                    <div style={{
+                        background: 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)',
+                        color: '#166534',
+                        padding: '20px 35px',
+                        borderRadius: '12px',
+                        fontWeight: 600,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        animation: 'fadeIn 0.5s ease'
+                    }}>
+                        <span style={{ fontSize: '1.5rem' }}>✓</span>
+                        Thank you! We'll notify you when we launch.
+                    </div>
+                );
+            }
+
+            return (
+                <form onSubmit={handleSubmit} style={{
+                    display: 'flex',
+                    gap: '12px',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center'
+                }}>
+                    <div style={{
+                        position: 'relative',
+                        transition: 'all 0.3s ease'
+                    }}>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            onFocus={() => setIsFocused(true)}
+                            onBlur={() => setIsFocused(false)}
+                            placeholder="Enter your email"
+                            required
+                            style={{
+                                padding: '16px 24px',
+                                border: `2px solid ${isFocused ? '#2563eb' : '#e2e8f0'}`,
+                                borderRadius: '12px',
+                                fontSize: '1rem',
+                                width: '320px',
+                                outline: 'none',
+                                transition: 'all 0.3s ease',
+                                boxShadow: isFocused ? '0 0 0 4px rgba(37, 99, 235, 0.1)' : 'none'
+                            }}
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        style={{
+                            padding: '16px 36px',
+                            background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '12px',
+                            fontSize: '1rem',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            boxShadow: '0 4px 15px rgba(37, 99, 235, 0.3)'
+                        }}
+                        onMouseOver={(e) => {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 8px 25px rgba(37, 99, 235, 0.4)';
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.3)';
+                        }}
+                    >
+                        Notify Me
+                    </button>
+                    <style>{`
+                        @keyframes fadeIn {
+                            from { opacity: 0; transform: scale(0.95); }
+                            to { opacity: 1; transform: scale(1); }
+                        }
+                    `}</style>
+                </form>
+            );
+        };
+
+        // Social Button Component
+        const SocialButton = ({ href, icon, label }) => {
+            const [isHovered, setIsHovered] = useState(false);
+            
+            return (
+                <a
+                    href={href}
+                    title={label}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '50px',
+                        height: '50px',
+                        color: isHovered ? '#fff' : '#64748b',
+                        textDecoration: 'none',
+                        fontSize: '1.3rem',
+                        border: `2px solid ${isHovered ? '#2563eb' : '#e2e8f0'}`,
+                        borderRadius: '50%',
+                        transition: 'all 0.3s ease',
+                        background: isHovered ? 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)' : 'transparent',
+                        transform: isHovered ? 'translateY(-3px)' : 'translateY(0)',
+                        boxShadow: isHovered ? '0 8px 20px rgba(37, 99, 235, 0.3)' : 'none'
+                    }}
+                >
+                    {icon}
+                </a>
+            );
+        };
+
+        // Main App Component
+        const App = () => {
+            return (
+                <>
+                    <BackgroundShapes />
+                    
+                    <main style={{
+                        flex: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '40px 20px',
+                        position: 'relative',
+                        zIndex: 1
+                    }}>
+                        <div style={{
+                            maxWidth: '900px',
+                            textAlign: 'center'
+                        }}>
+                            <Logo />
+                            
+                            <p style={{
+                                fontSize: '1.15rem',
+                                color: '#64748b',
+                                marginBottom: '45px',
+                                fontWeight: 500
+                            }}>
+                                Your Career. Your Journey. Our Guidance.
+                            </p>
+                            
+                            <StatusBadge />
+                            
+                            <h1 style={{
+                                fontSize: '2.8rem',
+                                fontWeight: 800,
+                                marginBottom: '20px',
+                                color: '#1a1a2e',
+                                lineHeight: 1.2
+                            }}>
+                                We're Building Something <br />
+                                <span style={{
+                                    background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent'
+                                }}>Amazing</span>
+                            </h1>
+                            
+                            <p style={{
+                                fontSize: '1.1rem',
+                                lineHeight: 1.8,
+                                color: '#475569',
+                                marginBottom: '40px',
+                                maxWidth: '600px',
+                                margin: '0 auto 40px'
+                            }}>
+                                PathUp is crafting a revolutionary platform to help students and professionals 
+                                navigate their educational and career paths with personalized guidance and expert mentorship.
+                            </p>
+                            
+                            <EmailForm />
+                            
+                            <div style={{
+                                marginTop: '50px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                gap: '15px'
+                            }}>
+                                <SocialButton 
+                                    href="#" 
+                                    icon={
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                        </svg>
+                                    } 
+                                    label="LinkedIn" 
+                                />
+                                <SocialButton 
+                                    href="#" 
+                                    icon={
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                                        </svg>
+                                    } 
+                                    label="Instagram" 
+                                />
+                            </div>
+                        </div>
+                    </main>
+                    
+                    <footer style={{
+                        textAlign: 'center',
+                        padding: '25px',
+                        fontSize: '0.9rem',
+                        color: '#94a3b8',
+                        position: 'relative',
+                        zIndex: 1
+                    }}>
+                        © 2026 PathUp. All rights reserved.
+                    </footer>
+                </>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
